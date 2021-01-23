@@ -71,7 +71,7 @@ CREATE TABLE fotos
   , titulo            VARCHAR(255)    NOT NULL
   , archivo           VARCHAR(255)    NOT NULL
   , fecha             DATE            NOT NULL
-  , equipo_id         BIGINT          REFERENCES equipo (id)
+  , equipo_id         BIGINT          REFERENCES equipos (id)
                                       ON DELETE NO ACTION
                                       ON UPDATE CASCADE
   , contadorVisitas   NUMERIC(6)      NOT NULL
