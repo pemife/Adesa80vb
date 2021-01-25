@@ -7,6 +7,7 @@ $log = require __DIR__ . '/log.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'name' => 'Adesa80',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -22,8 +23,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => app\models\Usuarios::class,
+            'enableAutoLogin' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
