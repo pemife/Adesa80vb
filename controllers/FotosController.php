@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Fotos;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,11 +22,45 @@ class FotosController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => [
+                    'create'
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'matchCallback' => function ($rule, $action) {
+
+                            if (Yii::$app->user->isGuest) {
+                                Yii::$app->session->setFlash('error', '¡No puedes subir una foto sin iniciar sesión!');
+                                return false;
+                            }
+
+                            if (Yii::$app->user->identity->id !== 1) {
+                                Yii::$app->session->setFlash('error', '¡Solo el administrador puede subir fotos!');
+                                return false;
+                            }
+
+                            // OPCIÓN PARA CUANDO LOS USUARIOS TENGAN PERMISOS PARA SUBIR IMÁGENES
+                            // if (!Yii::$app->user->identity->esValidado()) {
+                            //     Yii::$app->session->setFlash('error', '¡Tienes que validar tu usuario para subir una foto!');
+                            //     //TODO: debería redirigir a un enlace para la validación
+                            //     return false;
+                            // }
+
+                            return true;
+                        }
+                    ],
+                ],
+            ]
         ];
     }
 
