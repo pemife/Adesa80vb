@@ -57,6 +57,6 @@ class Equipos extends \yii\db\ActiveRecord
      */
     public function getFotos()
     {
-        return $this->hasMany(Fotos::className(), ['equipo_id' => 'id'])->inverseOf('equipo');
+        return $this->hasMany(Fotos::class, ['equipo_id' => 'id'])->inverseOf('equipo');
     }
 }

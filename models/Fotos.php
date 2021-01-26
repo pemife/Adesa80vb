@@ -38,7 +38,7 @@ class Fotos extends \yii\db\ActiveRecord
             [['equipo_id'], 'integer'],
             [['contadorvisitas'], 'number'],
             [['titulo', 'archivo'], 'string', 'max' => 255],
-            [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::className(), 'targetAttribute' => ['equipo_id' => 'id']],
+            [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
         ];
     }
 
@@ -64,6 +64,6 @@ class Fotos extends \yii\db\ActiveRecord
      */
     public function getEquipo()
     {
-        return $this->hasOne(Equipos::className(), ['id' => 'equipo_id'])->inverseOf('fotos');
+        return $this->hasOne(Equipos::class, ['id' => 'equipo_id'])->inverseOf('fotos');
     }
 }
