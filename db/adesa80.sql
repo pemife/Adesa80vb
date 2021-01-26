@@ -74,7 +74,7 @@ CREATE TABLE fotos
   , equipo_id         BIGINT          REFERENCES equipos (id)
                                       ON DELETE NO ACTION
                                       ON UPDATE CASCADE
-  , contadorVisitas   NUMERIC(6)      NOT NULL
+  , contadorVisitas   NUMERIC(6)      NOT NULL DEFAULT 0
   -- , validada          BOOLEAN         NOT NULL
 );
 
