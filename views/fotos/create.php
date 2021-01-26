@@ -1,6 +1,7 @@
 <?php
 
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -19,6 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'archivo')->textInput(['maxlength' => true]) ?>
+    
     <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
         'options' => ['placeholder' => 'Introduzca fecha de la foto'],
         'size' => 'sm',
@@ -28,9 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'equipo_id')->textInput() ?>
-    
-    <?= $form->field($model, 'archivo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'equipo_id')->widget(Select2::class, [
+        'data' => $equiposId,
+        'options' => [
+            'placeholder' => 'Selecciona un equipo ...',
+            'class'
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

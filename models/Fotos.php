@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Yii;
 
 /**
@@ -33,9 +34,10 @@ class Fotos extends \yii\db\ActiveRecord
     {
         return [
             [['titulo', 'archivo', 'fecha', 'contadorvisitas'], 'required'],
-            [['fecha'], 'safe'],
+            [['fecha'], 'date', 'format' => 'd-m-Y', 'min' => '1-1-1960', 'max' => date('d-m-Y')],
             [['equipo_id'], 'default', 'value' => null],
             [['equipo_id'], 'integer'],
+            [['contadorvisitas'], 'default', 'value' => 0],
             [['contadorvisitas'], 'number'],
             [['titulo', 'archivo'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
@@ -52,7 +54,7 @@ class Fotos extends \yii\db\ActiveRecord
             'titulo' => 'Titulo',
             'archivo' => 'Archivo',
             'fecha' => 'Fecha',
-            'equipo_id' => 'Equipo ID',
+            'equipo_id' => 'Equipo',
             'contadorvisitas' => 'Contadorvisitas',
         ];
     }

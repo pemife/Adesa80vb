@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Equipos;
 use Yii;
 use app\models\Fotos;
 use yii\data\ActiveDataProvider;
@@ -107,6 +108,7 @@ class FotosController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'equiposId' => Equipos::find()->select('id')->column(),
         ]);
     }
 
