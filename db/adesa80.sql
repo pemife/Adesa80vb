@@ -69,7 +69,8 @@ CREATE TABLE fotos
 (
     id                BIGSERIAL       PRIMARY KEY
   , titulo            VARCHAR(255)    NOT NULL
-  , archivo           VARCHAR(255)    NOT NULL
+  , imagen_nombre     VARCHAR(255)    NOT NULL
+  , imagen_url        VARCHAR(255)    NOT NULL
   , fecha             DATE            NOT NULL
   , equipo_id         BIGINT          REFERENCES equipos (id)
                                       ON DELETE NO ACTION

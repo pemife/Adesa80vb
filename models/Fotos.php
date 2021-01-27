@@ -11,6 +11,7 @@ use Yii;
  * @property int $id
  * @property string $titulo
  * @property string $archivo
+ * @property string $imagen_nombre
  * @property string $fecha
  * @property int|null $equipo_id
  * @property float $contadorvisitas
@@ -19,6 +20,8 @@ use Yii;
  */
 class Fotos extends \yii\db\ActiveRecord
 {
+    public $imagen;
+
     /**
      * {@inheritdoc}
      */
@@ -33,14 +36,16 @@ class Fotos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'archivo', 'fecha', 'contadorvisitas'], 'required'],
+            [['titulo', 'imagen_nombre', 'imagen_url', 'fecha', 'contadorvisitas'], 'required'],
             [['fecha'], 'date', 'format' => 'd-m-Y', 'min' => '1-1-1960', 'max' => date('d-m-Y')],
             [['equipo_id'], 'default', 'value' => null],
             [['equipo_id'], 'integer'],
             [['contadorvisitas'], 'default', 'value' => 0],
             [['contadorvisitas'], 'number'],
-            [['titulo', 'archivo'], 'string', 'max' => 255],
+            [['titulo', 'imagen_nombre', 'imagen_url'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
+            [['imagen'], 'file', 'extensions' => 'jpg, gif, png'],
+            [['imagen'], 'file', 'maxSize' => '100000']
         ];
     }
 
@@ -52,7 +57,7 @@ class Fotos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'titulo' => 'Titulo',
-            'archivo' => 'Archivo',
+            'imagen_nombre' => 'Nombre',
             'fecha' => 'Fecha',
             'equipo_id' => 'Equipo',
             'contadorvisitas' => 'Contadorvisitas',
