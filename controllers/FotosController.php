@@ -10,6 +10,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * FotosController implements the CRUD actions for Fotos model.
@@ -102,8 +103,17 @@ class FotosController extends Controller
     {
         $model = new Fotos();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imagen = UploadedFile::getInstance($model, 'imagen');
+            $model->imagen_nombre = $model->imagen->baseName;
+            
+            $imagenGuardada = $model->imagen->saveAs('@uploads/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension);
+
+            $model->imagen_url = 'media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension;
+
+            if ($imagenGuardada && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [

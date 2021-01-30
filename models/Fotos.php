@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Yii;
 
 /**
@@ -12,6 +11,7 @@ use Yii;
  * @property string $titulo
  * @property string $archivo
  * @property string $imagen_nombre
+ * @property string $imagen_url
  * @property string $fecha
  * @property int|null $equipo_id
  * @property float $contadorvisitas
@@ -36,7 +36,7 @@ class Fotos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'imagen_nombre', 'imagen_url', 'fecha', 'contadorvisitas'], 'required'],
+            [['titulo', 'imagen_nombre', 'imagen_url', 'contadorvisitas'], 'required'],
             [['fecha'], 'date', 'format' => 'd-m-Y', 'min' => '1-1-1960', 'max' => date('d-m-Y')],
             [['equipo_id'], 'default', 'value' => null],
             [['equipo_id'], 'integer'],
@@ -44,7 +44,7 @@ class Fotos extends \yii\db\ActiveRecord
             [['contadorvisitas'], 'number'],
             [['titulo', 'imagen_nombre', 'imagen_url'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
-            [['imagen'], 'file', 'extensions' => 'jpg, gif, png'],
+            [['imagen'], 'file', 'extensions' => 'jpg, jpeg, gif, png'],
             [['imagen'], 'file', 'maxSize' => 3*1024*1024]
         ];
     }
