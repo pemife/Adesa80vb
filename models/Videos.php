@@ -45,9 +45,9 @@ class Videos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'titulo' => 'Titulo',
-            'descripcion' => 'Descripcion',
+            'descripcion' => 'Descripción',
             'archivo' => 'Archivo',
-            'contadorvisitas' => 'Contadorvisitas',
+            'contadorvisitas' => 'Contador de visitas',
         ];
     }
 }

@@ -33,7 +33,7 @@ $this->registerJs($js);
 
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'archivo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imagen')->fileInput() ?>
 
     <?= Html::a('','javascript:void(0)', [
         'class' => 'fas fa-plus mb-4',

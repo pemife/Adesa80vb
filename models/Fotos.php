@@ -45,7 +45,7 @@ class Fotos extends \yii\db\ActiveRecord
             [['titulo', 'imagen_nombre', 'imagen_url'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
             [['imagen'], 'file', 'extensions' => 'jpg, gif, png'],
-            [['imagen'], 'file', 'maxSize' => '100000']
+            [['imagen'], 'file', 'maxSize' => 3*1024*1024]
         ];
     }
 
