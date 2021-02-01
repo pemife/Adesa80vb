@@ -2,6 +2,7 @@
 
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
+use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -31,9 +32,14 @@ $this->registerJs($js);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'imagen')->widget(FileInput::class, [
+        'options' => [
+            'accept' => 'image/*',
+            'multiple' => false,
+        ]
+    ]); ?>
 
-    <?= $form->field($model, 'imagen')->fileInput() ?>
+    <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
     <?= Html::a('','javascript:void(0)', [
         'class' => 'fas fa-plus mb-4',
