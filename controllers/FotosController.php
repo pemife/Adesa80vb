@@ -105,15 +105,35 @@ class FotosController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
-            $model->imagen_nombre = $model->imagen->baseName;
+
+            if($model->imagen) {
+
+                $model->imagen_nombre = $model->imagen->baseName . '.' . $model->imagen->extension;
+                
+                $model->imagen_url = 'media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension;
+
+                Yii::debug($model);
+                
+                if ($model->validate()) {
+                    
+                    if ($model->imagen->saveAs('media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension)) {
+
+                        if ($model->save()) {
+
+                            return $this->redirect(['view', 'id' => $model->id]);
+                        }
+
+                    }
+
+                    Yii::$app->session->setFlash('error', '¡La imagen no se guardó correctamente!');
+
+                }
             
-            $imagenGuardada = $model->imagen->saveAs('@uploads/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension);
+            } else {
 
-            $model->imagen_url = 'media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension;
-
-            if ($imagenGuardada && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('error', '¡No has seleccionado ninguna imágen!');
             }
+            
         }
 
         return $this->render('create', [

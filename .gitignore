@@ -38,3 +38,7 @@ tests/chromedriver
 
 # local environment variables
 .env
+
+# Almacenamiento de imagenes y videos
+/web/media/imagenes/*
+/web/media/videos/*

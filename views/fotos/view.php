@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Fotos */
 
-$this->title = $model->id;
+$this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Fotos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -15,27 +15,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id === 1) : ?>
+
+        <p>
+            <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => '¿Estas segur@ de que quieres borrar esta imagen?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
+
+    <?php endif ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'titulo',
-            'archivo',
             'fecha',
             'equipo_id',
             'contadorvisitas',
+            'imagen_nombre',
+            'imagen_url:image',
         ],
     ]) ?>
+
+    <img src="<?= $model->imagen_url ?>" alt="<?= $model->imagen_nombre ?>">
 
 </div>

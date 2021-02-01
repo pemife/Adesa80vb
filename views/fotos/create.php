@@ -30,12 +30,13 @@ $this->registerJs($js);
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'imagen')->widget(FileInput::class, [
         'options' => [
             'accept' => 'image/*',
             'multiple' => false,
+            'showCaption' => true
         ]
     ]); ?>
 

@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property string $titulo
- * @property string $archivo
  * @property string $imagen_nombre
  * @property string $imagen_url
  * @property string $fecha
@@ -36,7 +35,7 @@ class Fotos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'imagen_nombre', 'imagen_url', 'contadorvisitas'], 'required'],
+            [['titulo', 'imagen_nombre', 'imagen_url'], 'required'],
             [['fecha'], 'date', 'format' => 'd-m-Y', 'min' => '1-1-1960', 'max' => date('d-m-Y')],
             [['equipo_id'], 'default', 'value' => null],
             [['equipo_id'], 'integer'],
@@ -44,8 +43,8 @@ class Fotos extends \yii\db\ActiveRecord
             [['contadorvisitas'], 'number'],
             [['titulo', 'imagen_nombre', 'imagen_url'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
-            [['imagen'], 'file', 'extensions' => 'jpg, jpeg, gif, png'],
-            [['imagen'], 'file', 'maxSize' => 3*1024*1024]
+            // [['imagen'], 'file', 'extensions' => 'jpg, jpeg, gif, png'],
+            // [['imagen'], 'file', 'maxSize' => 3*1024*1024]
         ];
     }
 
@@ -72,5 +71,21 @@ class Fotos extends \yii\db\ActiveRecord
     public function getEquipo()
     {
         return $this->hasOne(Equipos::class, ['id' => 'equipo_id'])->inverseOf('fotos');
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+        if ($insert) {
+            if ($this->imagen) {
+                $this->imagen_nombre = $this->imagen->baseName;
+                $this->imagen_url = 'media/imagenes/' . $this->imagen_nombre . '.' . $this->imagen->extension;
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }
