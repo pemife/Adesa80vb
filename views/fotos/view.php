@@ -30,19 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php endif ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'titulo',
-            'fecha',
-            'equipo_id',
-            'contadorvisitas',
-            'imagen_nombre',
-            'imagen_url:image',
-        ],
-    ]) ?>
+    <?= Yii::debug($model) ?>
 
     <img src="<?= $model->imagen_url ?>" alt="<?= $model->imagen_nombre ?>">
+    
+    <?php if ($model->fecha) echo Html::tag('p', Html::encode(Yii::$app->formatter->asDate($model->fecha, 'long'))) ?>
 
 </div>

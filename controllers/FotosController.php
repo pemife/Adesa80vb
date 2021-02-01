@@ -111,12 +111,10 @@ class FotosController extends Controller
                 $model->imagen_nombre = $model->imagen->baseName . '.' . $model->imagen->extension;
                 
                 $model->imagen_url = 'media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension;
-
-                Yii::debug($model);
                 
                 if ($model->validate()) {
                     
-                    if ($model->imagen->saveAs('media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension)) {
+                    if ($model->imagen->saveAs('media/imagenes/' . $model->imagen->baseName . '.' . $model->imagen->extension)) {
 
                         if ($model->save()) {
 
