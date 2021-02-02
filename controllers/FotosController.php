@@ -106,33 +106,12 @@ class FotosController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
 
-            if($model->imagen) {
+            if ($model->save()) {
 
-                $model->imagen_nombre = $model->imagen->baseName . '.' . $model->imagen->extension;
-                
-                $model->imagen_url = 'media/imagenes/' . $model->imagen_nombre . '.' . $model->imagen->extension;
-                
-                if ($model->validate()) {
-                    
-                    if ($model->imagen->saveAs('media/imagenes/' . $model->imagen->baseName . '.' . $model->imagen->extension)) {
+                //TODO: Disparador que corrija que todas las imágenes tienen su correspondiente registro
+                // en la base de datos y borre las que sobren. Esto controlará el peso de las carpetas
 
-                        if ($model->save()) {
-
-                            //TODO: Disparador que corrija que todas las imágenes tienen su correspondiente registro
-                            // en la base de datos y borre las que sobren. Esto controlará el peso de las carpetas
-
-                            return $this->redirect(['view', 'id' => $model->id]);
-                        }
-
-                    }
-
-                    Yii::$app->session->setFlash('error', '¡La imagen no se guardó correctamente!');
-
-                }
-            
-            } else {
-
-                Yii::$app->session->setFlash('error', '¡No has seleccionado ninguna imágen!');
+                return $this->redirect(['view', 'id' => $model->id]);
             }
             
         }

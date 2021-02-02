@@ -30,15 +30,18 @@ $this->registerJs($js);
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'enableAjaxValidation' => true]]); ?>
 
     <?= $form->field($model, 'imagen')->widget(FileInput::class, [
         'options' => [
             'accept' => 'image/*',
             'multiple' => false,
-            'showCaption' => true
+            'showCaption' => true,
+        ],
+        'pluginOptions' => [
+            'maxFileSize' => 3*1024*1024,
         ]
-    ]); ?>
+    ])->label(false); ?>
 
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 

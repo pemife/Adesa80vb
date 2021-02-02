@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= Yii::debug($model) ?>
 
-    <img src="<?= $model->imagen_url ?>" alt="<?= $model->imagen_nombre ?>">
+    <?= Html::img($model->imagen_url, ['class' => 'img-fluid']) ?>
     
     <?php if ($model->fecha) echo Html::tag('p', Html::encode(Yii::$app->formatter->asDate($model->fecha, 'long'))) ?>
 

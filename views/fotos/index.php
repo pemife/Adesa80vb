@@ -50,7 +50,6 @@ $this->registerCSS($css);
             <div class="row">
                 <?php $contador = 0 ?>
                 <?php foreach($dataProvider->getModels() as $model) : ?>
-                    <!-- <img class="col-sm-4" src="<?= $model->imagen_url ?>" alt="<?= $model->imagen_nombre ?>"> -->
                     <?= Html::img($model->imagen_url, ['alt' => $model->imagen_nombre, 'class' => 'img-thumbnail m-2 col-sm-3']) ?>
                     <?php $contador++ ?>
                 <?php endforeach ?>

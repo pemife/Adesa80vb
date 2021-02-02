@@ -35,7 +35,7 @@ class Fotos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'imagen_nombre', 'imagen_url'], 'required'],
+            [['titulo', 'imagen'], 'required'],
             [['fecha'], 'date', 'format' => 'd-m-Y', 'min' => '1-1-1960', 'max' => date('d-m-Y')],
             [['equipo_id'], 'default', 'value' => null],
             [['equipo_id'], 'integer'],
@@ -43,8 +43,9 @@ class Fotos extends \yii\db\ActiveRecord
             [['contadorvisitas'], 'number'],
             [['titulo', 'imagen_nombre', 'imagen_url'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
-            // [['imagen'], 'file', 'extensions' => 'jpg, jpeg, gif, png'],
-            // [['imagen'], 'file', 'maxSize' => 3*1024*1024]
+            [['imagen'], 'file', 'extensions' => 'jpg, jpeg, gif, png'],
+            [['imagen'], 'file', 'maxSize' => 3*1024*1024],
+            // [['imagen'], 'limiteTamanio'],
         ];
     }
 
@@ -80,12 +81,20 @@ class Fotos extends \yii\db\ActiveRecord
         }
         if ($insert) {
             if ($this->imagen) {
-                $this->imagen_nombre = $this->imagen->baseName;
+                $this->imagen_nombre = str_replace(' ', '_', $this->imagen->baseName);
                 $this->imagen_url = 'media/imagenes/' . $this->imagen_nombre . '.' . $this->imagen->extension;
+                $this->imagen->saveAs($this->imagen_url);
                 return true;
             }
             return false;
         }
         return false;
     }
+
+    // private function limiteTamanio($archivo)
+    // {
+    //     if ($this->imagen-> ) {
+
+    //     }
+    // }
 }
