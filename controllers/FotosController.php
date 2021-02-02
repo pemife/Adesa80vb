@@ -118,6 +118,9 @@ class FotosController extends Controller
 
                         if ($model->save()) {
 
+                            //TODO: Disparador que corrija que todas las imágenes tienen su correspondiente registro
+                            // en la base de datos y borre las que sobren. Esto controlará el peso de las carpetas
+
                             return $this->redirect(['view', 'id' => $model->id]);
                         }
 
@@ -152,6 +155,11 @@ class FotosController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //TODO: Disparador que corrija que todas las imágenes tienen su correspondiente registro
+            // en la base de datos y borre las que sobren. Esto controlará el peso de las carpetas
+
+            //TODO: actualizar la foto si es necesario (total, no funciona ahora mismo)
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -170,6 +178,9 @@ class FotosController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
+        //TODO: Disparador que corrija que todas las imágenes tienen su correspondiente registro
+        // en la base de datos y borre las que sobren. Esto controlará el peso de las carpetas
 
         return $this->redirect(['index']);
     }
