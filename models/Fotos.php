@@ -43,9 +43,7 @@ class Fotos extends \yii\db\ActiveRecord
             [['contadorvisitas'], 'number'],
             [['titulo', 'imagen_nombre', 'imagen_url'], 'string', 'max' => 255],
             [['equipo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['equipo_id' => 'id']],
-            [['imagen'], 'file', 'extensions' => 'jpg, jpeg, gif, png'],
-            [['imagen'], 'file', 'maxSize' => 3*1024*1024],
-            // [['imagen'], 'limiteTamanio'],
+            [['imagen'], 'image', 'extensions' => 'jpg, jpeg, gif, png', 'maxSize' => 3*1024*1024, 'message' => 'La imagen es demasiado grande, no puede tener mas de 3MiB'],
         ];
     }
 
@@ -91,10 +89,10 @@ class Fotos extends \yii\db\ActiveRecord
         return false;
     }
 
-    // private function limiteTamanio($archivo)
-    // {
-    //     if ($this->imagen-> ) {
-
-    //     }
-    // }
+    public function limiteTamanio($imagen)
+    {
+        if ($this->imagen->size > 3000000) {
+            $this->addError($imagen, 'El archivo ' . $this->imagen->basename . ' es demasiado grande (como mi pene jaja salu2)');
+        }
+    }
 }
