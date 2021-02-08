@@ -50,7 +50,19 @@ $this->registerCSS($css);
             <div class="row">
                 <?php $contador = 0 ?>
                 <?php foreach($dataProvider->getModels() as $model) : ?>
-                    <?= Html::img($model->imagen_url, ['alt' => $model->imagen_nombre, 'class' => 'img-thumbnail m-2 col-sm-3']) ?>
+                    <?= Html::a(
+                            Html::img(
+                                $model->imagen_url,
+                                [
+                                    'title' => $model->imagen_nombre,
+                                    'alt' => $model->imagen_nombre,
+                                    'class' => 'img-fluid img-thumbnail border border-2 p-2 rounded m-2',
+                                    'style' => 'max-height: 50vh'
+                                ]
+                            ),
+                            ['fotos/view', 'id' => $model->id],
+                            ['class' => 'col-lg-6']
+                        ) ?>
                     <?php $contador++ ?>
                 <?php endforeach ?>
             </div>
