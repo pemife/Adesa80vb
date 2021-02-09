@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Fotos;
+use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
@@ -61,7 +63,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $fotosProvider = new ActiveDataProvider([
+            'query' => Fotos::find()->orderBy('contadorvisitas')->limit(4),
+        ]);
+
+        // Yii::debug(Fotos::find()->orderBy('contadorvisitas')->limit(1)->all());
+
+        return $this->render('index', [
+            'fotosProvider' => $fotosProvider,
+        ]);
     }
 
     /**
