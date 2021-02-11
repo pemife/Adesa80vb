@@ -73,7 +73,7 @@ Yii::debug($fotosProvider);
                 Html::img($foto->imagen_url, [
                   'class' => 'd-block imagenFoto mx-auto',
                   'alt' => $foto->titulo,
-                  'style' => 'max-height: 50vh;',
+                  'style' => 'max-height: 50vh; max-width: 50vh;',
                 ]),
                 [
                   'fotos/view', 'id' => $foto->id
